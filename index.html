@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mohammad Umar - Full Stack Developer specializing in MERN Stack, AI/ML, and Cloud Solutions">
+    <meta name="keywords" content="Mohammad Umar, Full Stack Developer, MERN Stack, React, Node.js, Web Development">
+    <meta name="author" content="Mohammad Umar">
+    <title>Mohammad Umar | Full Stack Developer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #121729;
+            --bg-card: #1a1f3a;
+            --accent-primary: #00f5ff;
+            --accent-secondary: #ff00ff;
+            --accent-gradient: linear-gradient(135deg, #00f5ff 0%, #ff00ff 100%);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            --border: #2d3748;
+            --shadow: rgba(0, 245, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(0, 245, 255, 0.03) 0%, transparent 40%);
+        }
+        
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        /* Header/Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        .hero-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid var(--accent-primary);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .gradient-text {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: var(--bg-primary);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 245, 255, 0.1);
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-tag {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-category {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .skill-category:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .skill-category h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .skill-tag {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+        }
+        
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .project-body {
+            padding: 2rem;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-tag {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--accent-primary);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-link {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .project-link:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(10px);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .contact-details h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-details p {
+            color: var(--text-secondary);
+        }
+        
+        .contact-details a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        footer p {
+            color: var(--text-muted);
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">&lt;MU /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">👋 Welcome to my portfolio</div>
+            <h1>
+                I'm <span class="gradient-text">Mohammad Umar</span><br>
+                Full Stack Developer
+            </h1>
+            <p class="hero-subtitle">
+                Building innovative web applications with MERN Stack, AI/ML, and Cloud Technologies
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <div class="section-tag">About Me</div>
+            <h2 class="section-title">Who I Am</h2>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    I'm a passionate Full Stack Developer pursuing B.Tech in Computer Science and Engineering (Data Science) 
+                    at Indraprastha Engineering College. I specialize in building scalable web applications using the MERN stack 
+                    and have a keen interest in Artificial Intelligence and Machine Learning.
+                </p>
+                <p>
+                    With expertise in modern web technologies, cloud platforms, and database management, I create efficient, 
+                    user-centric solutions. I follow Agile methodologies and focus on clean architecture and production-ready workflows.
+                </p>
+                <p>
+                    When I'm not coding, I'm solving algorithmic challenges on LeetCode, contributing to open-source projects, 
+                    or exploring the latest trends in AI and web development.
+                </p>
+            </div>
+            
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">LeetCode Problems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Projects Built</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Research Papers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-header">
+            <div class="section-tag">Technical Skills</div>
+            <h2 class="section-title">What I Work With</h2>
+            <p class="section-description">
+                A comprehensive toolkit for building modern web applications
+            </p>
+        </div>
+        
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Frontend Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">Responsive Design</span>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Backend Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Express.js</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Serverless</span>
+                    <span class="skill-tag">Authentication</span>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Database & Cloud</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">SQLite</span>
+                    <span class="skill-tag">Appwrite</span>
+                    <span class="skill-tag">Cloud Storage</span>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Programming Languages</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C</span>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>AI & Machine Learning</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">LangChain</span>
+                    <span class="skill-tag">Generative AI</span>
+                    <span class="skill-tag">Data Analysis</span>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Tools & Practices</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">VS Code</span>
+                    <span class="skill-tag">Postman</span>
+                    <span class="skill-tag">Agile</span>
+                    <span class="skill-tag">SDLC</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-tag">Portfolio</div>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-description">
+                Showcase of my recent work and contributions
+            </p>
+        </div>
+        
+        <div id="projects-container" class="projects-grid">
+            <!-- Projects will be loaded here dynamically -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading projects from GitHub...</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-tag">Get In Touch</div>
+            <h2 class="section-title">Let's Connect</h2>
+            <p class="section-description">
+                Feel free to reach out for collaborations or just a friendly chat
+            </p>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <p><a href="/cdn-cgi/l/email-protection#b9ccd4d8cbd8cbcad1d8dd8997ccd8f9ded4d8d0d597dad6d4"><span class="__cf_email__" data-cfemail="8df8e0ecffecfffee5ece9bda3f8eccdeae0ece4e1a3eee2e0">[email&#160;protected]</span></a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h4>Phone</h4>
+                        <p><a href="tel:+918899721612">+91 8899721612</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <h4>Location</h4>
+                        <p>Delhi, India</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 style="margin-bottom: 1.5rem;">Connect With Me</h3>
+                <div class="social-links">
+                    <a href="https://github.com/Mohammad-Umar-1" target="_blank" class="social-link" title="GitHub">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/mohammad-umar-348721222" target="_blank" class="social-link" title="LinkedIn">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="/cdn-cgi/l/email-protection#b8cdd5d9cad9cacbd0d9dc8896cdd9f8dfd5d9d1d496dbd7d5" class="social-link" title="Email">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div style="margin-top: 3rem;">
+                    <a href="https://github.com/Mohammad-Umar-1" target="_blank" class="btn btn-primary" style="display: inline-block;">
+                        View GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Mohammad Umar. Built with passion and code.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">Made with HTML, CSS & JavaScript • Powered by GitHub Pages</p>
+    </footer>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // GitHub API Integration - Automatically loads projects
+        const GITHUB_USERNAME = 'Mohammad-Umar-1';
+        const GITHUB_API = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`;
+        
+        // Manually featured projects with custom data
+        const featuredProjects = [
+            {
+                name: 'sydney-events-platform',
+                description: 'Full-stack MERN application for event scraping and listing with admin dashboard, Google OAuth authentication, and automated web scraping.',
+                topics: ['react', 'nodejs', 'mongodb', 'express', 'oauth', 'web-scraping'],
+                homepage: 'https://github.com/Mohammad-Umar-1/sydney-events-platform',
+                html_url: 'https://github.com/Mohammad-Umar-1/sydney-events-platform'
+            },
+            {
+                name: 'student-management-system',
+                description: 'Desktop-based Student Management System with role-based authentication, CRUD operations, and Excel/PDF export functionality.',
+                topics: ['python', 'tkinter', 'sqlite', 'pandas'],
+                homepage: null,
+                html_url: 'https://github.com/Mohammad-Umar-1'
+            },
+            {
+                name: 'movie-discovery-app',
+                description: 'Responsive movie discovery application with trending algorithm, search functionality, and TMDB API integration.',
+                topics: ['react', 'tailwind-css', 'tmdb-api', 'appwrite'],
+                homepage: null,
+                html_url: 'https://github.com/Mohammad-Umar-1'
+            },
+            {
+                name: 'cloud-storage-platform',
+                description: 'Full-stack cloud storage platform with file management, passwordless OTP authentication, and serverless architecture.',
+                topics: ['react', 'appwrite', 'nodejs', 'serverless'],
+                homepage: null,
+                html_url: 'https://github.com/Mohammad-Umar-1'
+            }
+        ];
+        
+        // Project icon mapping
+        const projectIcons = {
+            'sydney-events-platform': '🎭',
+            'student-management-system': '📚',
+            'movie-discovery-app': '🎬',
+            'cloud-storage-platform': '☁️',
+            'default': '💻'
+        };
+        
+        async function loadProjects() {
+            const container = document.getElementById('projects-container');
+            
+            try {
+                // Fetch repos from GitHub API
+                const response = await fetch(GITHUB_API);
+                const repos = await response.json();
+                
+                // Filter and sort repos
+                const validRepos = repos.filter(repo => 
+                    !repo.fork && 
+                    !repo.archived &&
+                    repo.name !== GITHUB_USERNAME
+                );
+                
+                // Combine featured projects with GitHub data
+                const allProjects = [...featuredProjects];
+                
+                // Add repos from GitHub that aren't in featured list
+                validRepos.forEach(repo => {
+                    if (!featuredProjects.find(p => p.name === repo.name)) {
+                        allProjects.push(repo);
+                    }
+                });
+                
+                // Take first 6 projects
+                const projectsToShow = allProjects.slice(0, 6);
+                
+                if (projectsToShow.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No projects found</p>';
+                    return;
+                }
+                
+                // Render projects
+                container.innerHTML = projectsToShow.map(repo => `
+                    <div class="project-card" onclick="window.open('${repo.html_url}', '_blank')">
+                        <div class="project-header">
+                            <div class="project-icon">${projectIcons[repo.name] || projectIcons.default}</div>
+                            <h3>${formatRepoName(repo.name)}</h3>
+                            <p class="project-description">${repo.description || 'No description available'}</p>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-tech">
+                                ${(repo.topics || []).slice(0, 4).map(topic => 
+                                    `<span class="tech-tag">${topic}</span>`
+                                ).join('')}
+                            </div>
+                            <div class="project-links">
+                                <a href="${repo.html_url}" target="_blank" class="project-link" onclick="event.stopPropagation()">
+                                    View Code →
+                                </a>
+                                ${repo.homepage ? `
+                                    <a href="${repo.homepage}" target="_blank" class="project-link" onclick="event.stopPropagation()">
+                                        Live Demo →
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Unable to load projects from GitHub</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Please check back later or visit my <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color: var(--accent-primary);">GitHub profile</a> directly</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Format repository name
+        function formatRepoName(name) {
+            return name
+                .split('-')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+  
